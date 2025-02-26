@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> I AM Daily Devotional </title>
+  <link href="data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAeaR9cIAAAAASUVORK5CYII=" rel="icon" type="image/x-icon" /> <!-- Prevents favicon error -->
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@500&family=Rubik:wght@400&display=swap" rel="stylesheet">
+  <style>
+    /* General Styles */
+    body {
+      margin: 0;
+      padding: 20px;
+      height: 100vh;  /* Full viewport height */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+
+      overflow: hidden;  /* Prevent scrolling */
+      user-select: none; /* Prevent text selection */
+
+      background-color: #D5D2CD; /* Fallback color */
+      background-image: 
+        linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.1)),
+        url('/background.png');
+      ;
+      background-size: contain;
+      background-position: center center;
+      background-repeat: no-repeat;
+    }
+
+    .container {
+      padding: 10px;
+      overflow: hidden; /* Prevent overflow */
+    }
+
+    /* Responsive Typography */
+    #verse-text {
+      font-family: 'Lora', serif;
+      color: #f9f6ee; /* alt = #9C8B7E */
+      font-size: clamp(2em, 5vw, 3em); /* Resizes dynamically */
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Soft shadow for visibility */
+      margin: 0.5em 0; /* Add some spacing */
+      text-align: center;
+    }
+
+    #verse-location,
+    #verse-statement {
+      font-family: 'Rubik', sans-serif;
+      color: #555; /* alt = #9C8B7E */
+      font-size: clamp(1.5em, 4vw, 2em); /* Resizes dynamically */
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Soft shadow for visibility */
+      margin: 0.25em 0;
+
+      position: absolute;
+      left: 20px;
+    }
+
+    #verse-location {
+      bottom: 50px;
+    }
+
+    #verse-statement {
+      top: 20px;
+    }
+
+    @media screen and (max-width: 768px) {
+      body {
+        padding: 10px; /* Add padding for smaller screens */
+      }
+
+      #verse-location {
+        bottom: 25px;
+      }
+
+      #verse-statement {
+        bottom: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 id="verse-text"></h1>
+    <p id="verse-location"></p>
+    <p id="verse-statement"></p>
+  </div>
+  
+  <script>
+    fetch('/verses.json')
+    .then(response => response.json())
+    .then(verses => {
+      const date = new Date();
+      const index = date.getDate() % verses.length;
+      const { text, location, statement } = verses[index];
+
+      document.getElementById("verse-text").textContent = text;
+      document.getElementById("verse-location").textContent = location;
+      document.getElementById("verse-statement").textContent = statement;
+    })
+    .catch(error => console.error("Error loading verses:", error));
+  </script>
+</body>
+</html>

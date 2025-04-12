@@ -23,7 +23,7 @@
       background-color: #D5D2CD; /* Fallback color */
       background-image: 
         linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.1)),
-        url('/background2.png');
+        url('./background2.png');
       ;
       background-size: cover;
       background-position: center center;
@@ -88,7 +88,7 @@
   </div>
   
   <script>
-    fetch('/verses.json')
+    fetch('./verses.json')
     .then(response => response.json())
     .then(verses => {
       const date = new Date();
